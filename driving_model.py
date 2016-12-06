@@ -17,7 +17,7 @@ from sklearn.model_selection import train_test_split
 
 def load_labels():
     labels = {}
-    with open('driving_log.csv', 'r') as f:
+    with open('IMG/driving_log.csv', 'r') as f:
         reader = csv.reader(f)
         for row in reader:
             key = os.path.basename(row[0])
