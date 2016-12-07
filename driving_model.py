@@ -78,9 +78,9 @@ def train_simple_cnn():
     model.add(Flatten())
     model.add(Dense(100, name="hidden1"))
     model.add(Activation('relu'))
-    model.add(Dense(50, name="hidden1"))
+    model.add(Dense(50, name="hidden2"))
     model.add(Activation('relu'))
-    model.add(Dense(10, name="hidden1"))
+    model.add(Dense(10, name="hidden3"))
     model.add(Activation('relu'))
     model.add(Dense(1, name='output'))
 
