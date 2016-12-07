@@ -54,7 +54,7 @@ X_train, y_train = load_data()
 
 X_train = preprocess_images(X_train)
 
-X_train, X_test, y_train, y_test = train_test_split(X_train, y_train, test_size=0.33)
+X_train, X_test, y_train, y_test = train_test_split(X_train, y_train, test_size=0.05)
 
 
 def train_simple_cnn():
@@ -69,10 +69,10 @@ def train_simple_cnn():
     model.add(Convolution2D(36, 5, 5, border_mode='valid'))
     model.add(MaxPooling2D())
     model.add(Activation('relu'))
-    model.add(Convolution2D(48, 3, 3, border_mode='valid'))
+    model.add(Convolution2D(48, 3, 3, border_mode='same'))
     model.add(MaxPooling2D())
     model.add(Activation('relu'))
-    model.add(Convolution2D(64, 3, 3, border_mode='valid'))
+    model.add(Convolution2D(64, 3, 3, border_mode='same'))
     model.add(MaxPooling2D())
     model.add(Activation('relu'))
     model.add(Flatten())
@@ -84,10 +84,11 @@ def train_simple_cnn():
     model.add(Activation('relu'))
     model.add(Dense(1, name='output'))
 
+
     model.summary()
 
     model.compile(loss='mse',
-                  optimizer=Adam(),
+                  optimizer=Adam(lr=0.0001),
                   metrics=['mean_absolute_error'])
 
     write_cropped_layer_output(model)
