@@ -76,11 +76,11 @@ def train_simple_cnn():
     topCropPixels = int(float(shape[0] * 0.3))
     model.add(Cropping2D(cropping=((topCropPixels, 0), (0, 0)), input_shape=shape))
 
-    model.add(Convolution2D(24, 5, 5, subsample=(2,2), border_mode='valid'))
+    model.add(Convolution2D(24, 5, 5, subsample=(2,2), border_mode='same'))
     model.add(MaxPooling2D())
     model.add(Activation('relu'))
     model.add(Dropout(0.2))
-    model.add(Convolution2D(36, 5, 5, subsample=(2,2), border_mode='same'))
+    model.add(Convolution2D(36, 3, 3, border_mode='same'))
     model.add(MaxPooling2D())
     model.add(Dropout(0.2))
     model.add(Activation('relu'))
