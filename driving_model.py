@@ -14,6 +14,8 @@ from keras.optimizers import SGD, Adam, RMSprop
 from keras.utils import np_utils
 from sklearn.model_selection import train_test_split
 
+from preprocess_image import preprocess_image
+
 
 def load_labels():
     labels = {}
@@ -46,9 +48,18 @@ def load_data():
     return np.array(X),np.array(Y)
 
 
-def preprocess_images(images, fx=1.0, fy=1.0):
-    images = np.array([cv2.resize(image, (0,0), fx=fx, fy=fy) for image in images])
-    return (images - 128.0) / 255.0
+def preprocess_images(images):
+    images = np.array([preprocess_image(image) for image in images])
+    # write_images(images, "shrunk")
+    return images
+
+
+def write_images(images, subfolder):
+    if not os.path.exists(subfolder):
+        os.mkdir(subfolder)
+    for i, image in enumerate(images):
+        cv2.imwrite("{}/shrunk{}.jpg".format(subfolder, i), (image + 0.5) * 255.)
+
 
 X_train, y_train = load_data()
 
@@ -63,22 +74,17 @@ def train_simple_cnn():
     topCropPixels = int(float(shape[0] * 0.3))
     model.add(Cropping2D(cropping=((topCropPixels, 0), (0, 0)), input_shape=shape))
 
-    model.add(Convolution2D(24, 5, 5, border_mode='valid'))
+    model.add(Convolution2D(24, 5, 5, subsample=(2,2), border_mode='valid'))
     model.add(MaxPooling2D())
     model.add(Activation('relu'))
-    model.add(Convolution2D(36, 5, 5, border_mode='valid'))
+    model.add(Dropout(0.2))
+    model.add(Convolution2D(36, 5, 5, subsample=(2,2), border_mode='same'))
     model.add(MaxPooling2D())
-    model.add(Activation('relu'))
-    model.add(Convolution2D(48, 3, 3, border_mode='same'))
-    model.add(MaxPooling2D())
-    model.add(Activation('relu'))
-    model.add(Convolution2D(64, 3, 3, border_mode='same'))
-    model.add(MaxPooling2D())
+    model.add(Dropout(0.2))
     model.add(Activation('relu'))
     model.add(Flatten())
     model.add(Dense(100, name="hidden1"))
-    model.add(Activation('relu'))
-    model.add(Dense(50, name="hidden2"))
+    model.add(Dropout(0.2))
     model.add(Activation('relu'))
     model.add(Dense(10, name="hidden3"))
     model.add(Activation('relu'))
