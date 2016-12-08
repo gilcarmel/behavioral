@@ -1,0 +1,4 @@
+- tried NVIDIA network structure w/ orig image size - took a long time!
+- resized/simplified image to improve iteration time, ran on AWS
+- flipping to account for bias
+- try YUV?
