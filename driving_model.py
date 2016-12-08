@@ -1,6 +1,8 @@
+import numpy as np
+np.random.seed(1777)
+
 import cv2
 import keras
-import numpy as np
 import os
 from PIL import Image
 import scipy.misc
