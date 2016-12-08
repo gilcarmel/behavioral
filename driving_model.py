@@ -18,6 +18,7 @@ from sklearn.model_selection import train_test_split
 
 from preprocess_image import preprocess_image
 
+limit_image_load = None
 
 def load_labels():
     labels = {}
@@ -26,15 +27,22 @@ def load_labels():
         for row in reader:
             key = os.path.basename(row[0])
             labels[key] = float(row[3])
+            labels[reverse_key(key)] = -labels[key]
     return labels
+
+
+def reverse_key(key):
+    return key + 'r'
+
 
 def load_images():
     images = {}
     path = 'IMG'
     for (_, _, filenames) in os.walk(path):
-        for filename in filenames:
+        for filename in filenames[:limit_image_load]:
             if 'center' in filename:
                 images[filename] = scipy.misc.imread(path + '/' + filename, flatten=False, mode='RGB')
+                images[reverse_key(filename)] = np.fliplr(images[filename])
         break
     return images
 
@@ -60,7 +68,7 @@ def write_images(images, subfolder):
     if not os.path.exists(subfolder):
         os.mkdir(subfolder)
     for i, image in enumerate(images):
-        cv2.imwrite("{}/shrunk{}.jpg".format(subfolder, i), (image + 0.5) * 255.)
+        cv2.imwrite("{}/{}.jpg".format(subfolder, i), (image + 0.5) * 255.)
 
 
 X_train, y_train = load_data()
