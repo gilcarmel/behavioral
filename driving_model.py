@@ -67,7 +67,7 @@ X_train, y_train = load_data()
 
 X_train = preprocess_images(X_train)
 
-X_train, X_test, y_train, y_test = train_test_split(X_train, y_train, test_size=0.05)
+X_train, X_test, y_train, y_test = train_test_split(X_train, y_train, test_size=0.05, random_state=1234)
 
 
 def train_simple_cnn():
@@ -96,7 +96,7 @@ def train_simple_cnn():
     model.summary()
 
     model.compile(loss='mse',
-                  optimizer=Adam(lr=0.0001),
+                  optimizer=Adam(lr=0.00005),
                   metrics=['mean_absolute_error'])
 
     write_cropped_layer_output(model)
