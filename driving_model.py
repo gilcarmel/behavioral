@@ -100,7 +100,7 @@ def train_simple_cnn():
     write_cropped_layer_output(model)
 
     history = model.fit(X_train, y_train,
-                        batch_size=256, nb_epoch=10,
+                        batch_size=128, nb_epoch=100,
                         verbose=1, validation_split=0.2,
                         validation_data=(X_test, y_test),
                         shuffle=True)
