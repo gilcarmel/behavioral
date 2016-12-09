@@ -17,6 +17,7 @@ Network Architecutre
 After initially trying [NVIDIA's network structure](http://images.nvidia.com/content/tegra/automotive/images/2016/solutions/pdf/end-to-end-dl-using-px.pdf)with the original image size (320x160), I decided to try a simpler network to further reduce training times. My intuition was that NVIDIA's model had to deal with a much wider variety of environments and lighting conditions than our simple simulator.
 
 I ended up with the following architecture:
+
     (input 96x48x3) -->
       (crop to 96x34x3) --> 
 	     (conv to 48x17x24) --> (maxpool to 24x8x24) -> relu -> dropout(0.2) -->
