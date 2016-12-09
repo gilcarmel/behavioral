@@ -1,5 +1,7 @@
 ## Steering Angle Prediction Using Behavioral Cloning
 
+![alt text](https://github.com/gilcarmel/behavioral/blob/master/sample_images/driving.gif "Drive!")
+
 For this project, I designed and trained a neural network that can steer a simulated car based on an image from its front-facing camera. The network was trained using _behavioral cloning_ - a technique that teaches the model to mimic an observed behavior. In this case, the network learned to mimic a human driver's steering angle driving around two different tracks.
 
 ### Data Collection
