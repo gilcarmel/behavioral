@@ -1,6 +1,6 @@
 ## Steering Angle Prediction Using Behavioral Cloning
 
-For this project, I designed and trained a neural network that can steer a simulated car based on an image from its front-facing camera. The network was trained using _behavioral cloning_ - a technique that teaches the network to mimic an observed behavior. In this case, the network learned to mimic a human driver's steering angle driving around two different tracks.
+For this project, I designed and trained a neural network that can steer a simulated car based on an image from its front-facing camera. The network was trained using _behavioral cloning_ - a technique that teaches the model to mimic an observed behavior. In this case, the network learned to mimic a human driver's steering angle driving around two different tracks.
 
 ### Data Collection
 I collected training data (images and their corresponding steering angles) by driving the simulated car for a few laps down the center of the lane. I added a lot of examples of recentering the car from both the left and right shoulder. This is necessary to help the model recover when the car inevitably starts to drift (a model trained purely on center-lane driving would not know how to recover).
@@ -32,7 +32,7 @@ Input images are preprocessed prior to training and inference:
 * Horizontal flipping: The data was collected driving one way around the looped track, resulting in a much higher proportion of left turns vs right turns. After noticing that the model was performing fairly well on left turns but poorly on sharp right turns, I doubled the data set by flipping each image and negating its corresponding steering angle.
 
 ### Network Architecutre
-After initially trying [NVIDIA's network structure](http://images.nvidia.com/content/tegra/automotive/images/2016/solutions/pdf/end-to-end-dl-using-px.pdf)with the original image size (320x160), I decided to try a simpler network to further reduce training times. My intuition was that NVIDIA's model had to deal with a much wider variety of environments and lighting conditions than our simple simulator.
+After initially trying [NVIDIA's network structure](http://images.nvidia.com/content/tegra/automotive/images/2016/solutions/pdf/end-to-end-dl-using-px.pdf) with the original image size (320x160), I decided to try a simpler network to reduce training times. My intuition was that NVIDIA's model had to deal with a much wider variety of environments and lighting conditions than our simple simulator.
 
 I ended up with the following architecture:
 
@@ -85,9 +85,9 @@ Here is the summary as printed by Keras:
 
 
 ### Training
-I used a train/test split of 95%/5% and a train/validation split of 80%/20%. The loss function was the MSE of the final output vs the steering angle. 
+I used a train/test split of 95%/5% and a train/validation split of 80%/20%. The loss function was the mean square error between the prediction and the steering angle. 
 
-The simplified network and reduced image size resulted in training time of about 3 seconds per 25k-image epoch on an AWS p2 instance, allowing me to try various combinations of hyperparameters (batch size & learning rate). The loss appeared to converge after about 100 epochs. A few things of note:
+The simplified network and reduced image size resulted in training time of about 3 seconds per 26k-image epoch on an AWS p2 instance, allowing me to try various combinations of hyperparameters (batch size & learning rate). The loss appeared to converge after about 100 epochs. A few things of note:
 * I used the mean absolute error as the accuracy metric (to get a rough idea of a model's potential during training, before connecting it to the simulator). Track 1 trains from a mean error of about 0.7 down to about 0.4 for a successful model. Track 2 trains down from 0.20 to 0.1 - perhaps because this track feature sharper turns. Mean error seemed to correlate roughly, though not perfectly, with real performance on the track (i.e the lowest-error model was not necessarily the best performer on the track). I'd be curious to learn more about accuracy metrics for this type of prediction task. 
 * I fixed the random seed, hoping to make training deterministic to help with hyperparameter tuning. This didn't seem to work - training proceeded differently each time, even with no changes to the model or data. This made hyperparameter tuning more difficult as it was hard to attribute improved performance to parameter values (vs randomness).
 * Hyperparameter tuning was done very ad-hoc, until it was "good enough". A more formal approach to parameter search would probably yeild better results.
