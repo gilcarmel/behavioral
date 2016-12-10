@@ -110,8 +110,8 @@ To improve performance, I made three adjustments:
 
 We these edits, the car was much less erratic, swerving less and staying closer to center lane.
 
-A final note - I noticed that my model does not do as well for graphics settings that are different than the training images. This indicates that the model did not generalize around the correct features (road curvature), and to some extent memorized the unrelated features in the training set.
+A final note - I noticed that my model does not do as well for graphics settings that are different than the training images (640x480, "Fastest" graphics). This indicates that the model did not generalize around the correct features (road curvature), and to some extent memorized the unrelated features in the training set.
 
-Here's a link to the full video, going around both tracks:
-https://youtu.be/BFMoccwHGjc
+Here's the [full video](https://youtu.be/BFMoccwHGjc), going around both tracks.
+
 
