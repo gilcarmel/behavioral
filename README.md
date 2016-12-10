@@ -96,10 +96,16 @@ The simplified network and reduced image size resulted in training time of about
 
 ### Performance
 
-The model performed pretty well, making it all the way through both tracks. It is a bit swervy at times, especially during sharp turns. It is likely biased towards straightaways and shallower turns, reflecting a similar bias in the training data. Collecting more data at sharp turns would likely improve the performance.
+After a lot of trian and error, I finally got a model that made it all all the way through both tracks. But it was a bit swervy, and would sometimes go on the shoulder during sharp turns:
 
 ![alt text](https://github.com/gilcarmel/behavioral/blob/master/sample_images/swerve.gif "Swerve!")
 
+To improve performance, I made three adjustments:
+* I collected more training data for sharp turns, to better distribute the steering angles in the training set. 
+* I increased dropout from 0.2 to 0.4, to avoid overfitting to bad data that snuck into the training set
+* I increased the number of epochs to 300 after noticing that accuracy was still improving after 100 epochs.
+
+We these edits, the car was much less erratic, swerving less and staying closer to center lane.
 
 Here's a link to the full video, going around both tracks:
 
