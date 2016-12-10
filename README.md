@@ -29,7 +29,7 @@ Recover from right (steering angle -0.38):
 ### Preprocessing
 
 Input images are preprocessed prior to training and inference:
-* Scaling/cropping: images were scaled down to 30% scale, and cropped the top 30% (mostly sky). After visually examining the scaled/cropped images, I suspected they still conveyed enough information to make a correct steering prediction (this was confirmed in practice later). The smaller images dramatically improved network training time, allowing for more experimentation with preprocessing, architecture, and hyperparemeters.
+* Scaling/cropping: images were scaled down to 30% scale, and cropped the top 30% (mostly sky). After visually examining the scaled/cropped images, I suspected they still conveyed enough information to make a correct steering prediction (this was confirmed in practice later). The smaller images dramatically improved network training time, allowing for more experimentation with preprocessing, architecture, and hyperparemeters. It also allowed all the training data to fit in memory, obviating the need to stream it in using a generator.
 * Horizontal flipping: The data was collected driving one way around the looped track, resulting in a much higher proportion of left turns vs right turns. After noticing that the model was performing fairly well on left turns but poorly on sharp right turns, I doubled the data set by flipping each image and negating its corresponding steering angle.
 * YUV conversion: My models seemed to perform better with YUV images (vs RGB). I found this surprising - I would think the convolutional layers of my model would in a way "figure out" the correct color space. I wasn't methodical in verifying the improved performance vs RGB - so I might be overstating the effect.
 
