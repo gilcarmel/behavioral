@@ -106,9 +106,11 @@ After a lot of trial and error, I finally got a model that made it all all the w
 To improve performance, I made three adjustments:
 * Collected more training data for sharp turns, to better distribute the steering angles in the training set 
 * Increased dropout from 0.2 to 0.4, to avoid overfitting to bad data that snuck into the training set
-* Increased the number of epochs to 300 after noticing that accuracy was still improving after 100 epochs.
+* Increased the number of epochs to 200 after noticing that accuracy was still improving after 100 epochs.
 
 We these edits, the car was much less erratic, swerving less and staying closer to center lane.
+
+A final note - I noticed that my model does not do as well for graphics settings that are different than the training images. This indicates that the model did not generalize around the correct features (road curvature), and to some extent memorized the unrelated features in the training set.
 
 Here's a link to the full video, going around both tracks:
 
