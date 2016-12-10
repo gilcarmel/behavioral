@@ -35,6 +35,7 @@ def load_labels():
             labels[key] = float(row[3])
             # Negate steering angle for horizontally flipped image
             labels[reverse_key(key)] = -labels[key]
+    print(np.histogram(list(labels.values())))
     return labels
 
 
@@ -80,7 +81,7 @@ def write_images(images, subfolder):
         cv2.imwrite("{}/{}.jpg".format(subfolder, i), (image + 0.5) * 255.)
 
 def train_simple_cnn():
-    model = Sequential(name='simple_cnn')
+    model = Sequential(name='model')
     shape = X_train[0].shape
     topCropPixels = int(float(shape[0] * 0.3))
     model.add(Cropping2D(cropping=((topCropPixels, 0), (0, 0)), input_shape=shape))
@@ -88,14 +89,14 @@ def train_simple_cnn():
     model.add(Convolution2D(24, 5, 5, subsample=(2, 2), border_mode='same'))
     model.add(MaxPooling2D())
     model.add(Activation('relu'))
-    model.add(Dropout(0.2))
+    model.add(Dropout(0.4))
     model.add(Convolution2D(36, 3, 3, border_mode='same'))
     model.add(MaxPooling2D())
-    model.add(Dropout(0.2))
+    model.add(Dropout(0.4))
     model.add(Activation('relu'))
     model.add(Flatten())
     model.add(Dense(100, name="hidden1"))
-    model.add(Dropout(0.2))
+    model.add(Dropout(0.4))
     model.add(Activation('relu'))
     model.add(Dense(10, name="hidden3"))
     model.add(Activation('relu'))
@@ -108,7 +109,7 @@ def train_simple_cnn():
                   metrics=['mean_absolute_error'])
 
     history = model.fit(X_train, y_train,
-                        batch_size=128, nb_epoch=100,
+                        batch_size=128, nb_epoch=200,
                         verbose=1, validation_split=0.2,
                         validation_data=(X_test, y_test),
                         shuffle=True)
