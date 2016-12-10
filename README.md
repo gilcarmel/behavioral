@@ -29,9 +29,9 @@ Recover from right (steering angle -0.38):
 ### Preprocessing
 
 Input images are preprocessed prior to training and inference:
-* YUV conversion: My models performed better with YUV images (vs RGB). I found this surprising - I would think the convolutional layers of my model would in a way "figure out" the correct color space.
 * Scaling/cropping: images were scaled down to 30% scale, and cropped the top 30% (mostly sky). After visually examining the scaled/cropped images, I suspected they still conveyed enough information to make a correct steering prediction (this was confirmed in practice later). The smaller images dramatically improved network training time, allowing for more experimentation with preprocessing, architecture, and hyperparemeters.
 * Horizontal flipping: The data was collected driving one way around the looped track, resulting in a much higher proportion of left turns vs right turns. After noticing that the model was performing fairly well on left turns but poorly on sharp right turns, I doubled the data set by flipping each image and negating its corresponding steering angle.
+* YUV conversion: My models seemed to perform better with YUV images (vs RGB). I found this surprising - I would think the convolutional layers of my model would in a way "figure out" the correct color space. I wasn't methodical in verifying the improved performance vs RGB - so I might be overstating the effect.
 
 ### Network Architecutre
 After initially trying [NVIDIA's network structure](http://images.nvidia.com/content/tegra/automotive/images/2016/solutions/pdf/end-to-end-dl-using-px.pdf) with the original image size (320x160), I decided to try a simpler network to reduce training times. My intuition was that NVIDIA's model had to deal with a much wider variety of environments and lighting conditions than our simple simulator.
@@ -96,4 +96,10 @@ The simplified network and reduced image size resulted in training time of about
 
 ### Performance
 
-////LINK TO VIDEO
+The model performed pretty well, making it all the way through both tracks. It is a bit swervy at times, especially during sharp turns. It is likely biased towards straightaways and shallower turns, reflecting a similar bias in the training data. Collecting more data at sharp turns would likely improve the performance.
+
+![alt text](https://github.com/gilcarmel/behavioral/blob/master/sample_images/swerve.gif "Swerve!")
+
+
+Here's a link to the full video, going around both tracks:
+
