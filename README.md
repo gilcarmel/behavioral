@@ -96,7 +96,7 @@ The simplified network and reduced image size resulted in training time of about
 
 ### Performance
 
-After a lot of trian and error, I finally got a model that made it all all the way through both tracks. But it was a bit swervy, and would sometimes go on the shoulder during sharp turns:
+After a lot of trial and error, I finally got a model that made it all all the way through both tracks. But it was a bit swervy, and would sometimes go on the shoulder during sharp turns:
 
 ![alt text](https://github.com/gilcarmel/behavioral/blob/master/sample_images/swerve.gif "Swerve!")
 
