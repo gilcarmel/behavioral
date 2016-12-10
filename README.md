@@ -14,17 +14,20 @@ I found it hard to control the car perfectly and some bad driving examples defin
 
 Here are some examples from the training set. Steering angles range from -1 (hard right turn) to 1 (hard left turn):
 
-Center-lane driving (steering angle 0):
 
 ![alt text](https://github.com/gilcarmel/behavioral/blob/master/sample_images/center_0.0.jpg "Center-lane driving (steering angle 0)")
 
-Recover from left (steering angle 0.7):
+_Center-lane driving (requires steering angle 0)_
+
 
 ![alt text](https://github.com/gilcarmel/behavioral/blob/master/sample_images/recover_left_0.70.jpg "Recover from left (steering angle 0.7)")
 
-Recover from right (steering angle -0.38):
+_Recover from left (requires steering angle 0.7)_
 
 ![alt text](https://github.com/gilcarmel/behavioral/blob/master/sample_images/recover_right_-0.38.jpg "Recover from right (steering angle -0.38)")
+
+_Recover from right (requires steering angle -0.38)_
+
 
 ### Preprocessing
 
@@ -101,9 +104,9 @@ After a lot of trial and error, I finally got a model that made it all all the w
 ![alt text](https://github.com/gilcarmel/behavioral/blob/master/sample_images/swerve.gif "Swerve!")
 
 To improve performance, I made three adjustments:
-* I collected more training data for sharp turns, to better distribute the steering angles in the training set. 
-* I increased dropout from 0.2 to 0.4, to avoid overfitting to bad data that snuck into the training set
-* I increased the number of epochs to 300 after noticing that accuracy was still improving after 100 epochs.
+* Collected more training data for sharp turns, to better distribute the steering angles in the training set 
+* Increased dropout from 0.2 to 0.4, to avoid overfitting to bad data that snuck into the training set
+* Increased the number of epochs to 300 after noticing that accuracy was still improving after 100 epochs.
 
 We these edits, the car was much less erratic, swerving less and staying closer to center lane.
 
