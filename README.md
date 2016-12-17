@@ -39,7 +39,9 @@ Input images are preprocessed prior to training and inference:
 ### Network Architecutre
 After initially trying [NVIDIA's network structure](http://images.nvidia.com/content/tegra/automotive/images/2016/solutions/pdf/end-to-end-dl-using-px.pdf) with the original image size (320x160), I decided to try a simpler network to reduce training times. My intuition was that NVIDIA's model had to deal with a much wider variety of environments and lighting conditions than our simple simulator.
 
-I began removing convolutional layers from the NVIDIA architecture. The smaller input image meant we did not need as many convolution layers before getting down to a short, wide, deep image (12x4, depth 36) that could be reasonably fed to a fully connected layer. I intuited that this wide short image could easily convey all the information we needed to make a single steering angle prediction in the range [-1,1]. I would love to see a visualization of this layer's activation - it might very well look like a stereo equalizer lighting up more or less according to the desired turn' sharpness. I ended up with the following architecture:
+I began removing convolutional layers from the NVIDIA architecture. The smaller input image meant we did not need as many convolution layers before getting down to a short, wide, deep image (12x4, depth 36) that could be reasonably fed to a fully connected layer. I intuited that this wide short image could easily convey all the information we needed to make a single steering angle prediction in the range [-1,1]. I would love to see a visualization of this layer's activation - it might very well look like a stereo equalizer lighting up more or less according to the desired turn' sharpness.
+
+I ended up with the following architecture:
 
     (input 96x48x3) -->
       (crop to 96x34x3) --> 
@@ -49,7 +51,9 @@ I began removing convolutional layers from the NVIDIA architecture. The smaller 
     	           (flatten) --> (fully connected to 10) --> relu -->
     	              (fully connected to 1) --> prediction:
 
-Here is the summary as printed by Keras:
+Since I was able to get good results with this network, I stopped here. Thinking about it more, I'm fairly confident that I could have simplified the network further and achieved similar results. Since I finished my project, I learned that a fellow student scaled the input images down to 32x16 and was able to train a successful network! A network that small can almost be trained at interactive speeds - a huge boon to experimentation and discovery.
+
+Here is the architecture summary as printed by Keras:
 
     Layer (type)                     Output Shape          Param #     Connected to                     
     ====================================================================================================
